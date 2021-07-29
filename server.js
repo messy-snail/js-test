@@ -9,9 +9,9 @@ let server = net.createServer(function(socket) {
         chunk.toString());
     });
 
-    // socket.on('end', function() {
-    //     console.log('클라이언트 접속 종료');
-    // });
+    socket.on('end', function() {
+        console.log('클라이언트 접속 종료');
+    });
 });
 
 server.on('listening', function() {

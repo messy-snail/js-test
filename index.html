@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <title>Document</title>
-    <script src="client.js"></script>
+    <title>클라이언트 테스트</title>
 </head>
+
 <body>
-    <h1>Index</h1>
-    <hr />
-    <button onclick="client_on()">클라이언트 ON</button>
+    <form>
+        <input id="textMessage" type="text">
+        <input onclick="send_message()" value="전송" type="button">
+        <input onclick="disconnect()" value="끊기" type="button">
+
+    </form>
+
+ 
+    <br />
     
+    <textarea id="messageTextArea" rows="10" cols="50"></textarea>
+    <script type="text/javascript" src="client.js"></script>
 </body>
+
 </html>

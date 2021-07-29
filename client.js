@@ -1,27 +1,30 @@
-function client_on() {
-    let net = require('net');
+let webSocket = new WebSocket("ws://127.0.0.1:4200");
+let messageTextArea = document.getElementById("messageTextArea");
 
-    let ip = '127.0.0.1';
-    let port = 4200;
+webSocket.onopen = function (message) {
+    messageTextArea.value += "서버 연결...\n";
+};
+// 소멸 콜백
+webSocket.onclose = function (message) {
+    messageTextArea.value += "서버 끊기...\n";
+};
+// 에러 콜백
+webSocket.onerror = function (message) {
+    messageTextArea.value += "에러...\n";
+};
+// 메시지 콜백
+webSocket.onmessage = function (message) {
+    // 출력 area에 메시지를 표시한다.
+    messageTextArea.value += "수신: " + message.data + "\n";
+};
 
-    let socket = new net.Socket();
-    socket.connect({host:ip, port:port}, function() {
-        console.log('서버와 연결 성공');
-     
-        socket.write('Hello Socket Server\n');
-        socket.end();
-     
-         socket.on('data', function(chunk) {
-             console.log('서버가 보냄 : ',
-             chunk.toString());      
-            //  document.getElementById("text_edit").innerHTML = chunk.toString();  
-         });
-     
-         socket.on('end', function() {
-             console.log('서버 연결 종료');
-         });
-     });
+function send_message() {
+    var message = document.getElementById("textMessage");
+    messageTextArea.value += "송신: " + message.value + "\n";
+    webSocket.send(message.value);
+    message.value = "";
 }
 
-
-client_on()
+function disconnect() {
+    webSocket.close();
+}
